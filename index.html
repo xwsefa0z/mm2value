@@ -1,91 +1,518 @@
-<!DOCTYPE html>
+statusEl.innerText = `🎉 Büyük Karlı Takas! (+${diff.toLocaleString()} Val Kazançtasın)`;
+            } else {<!DOCTYPE html>
 <html lang="tr">
+                statusEl.className = "mt-4 p-3 rounded-lg text-center font-bold text-sm bg-red-500/10 border border-red-500/30 text-red-400";
+                statusEl.innerText = `⚠️ Ziyandasın! (-${diff.toLocaleString()} Val Kayıptasın)`;
+            }
+
+            lucide.createIcons();
+        }
+
+        // Initialize on page load
+        window.onload = function () {
+            renderCategories();
+            renderItems();
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MM2 Value List</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            text-align: center;
-            padding: 20px;
-        }
-        h1 {
-            color: #00e676;
-        }
-        .search-box {
-            padding: 10px;
-            width: 80%;
-            max-width: 400px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: none;
-        }
-        table {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background-color: #1e1e1e;
-        }
-        th, td {
-            padding: 12px;
-            border: 1px solid #333;
-        }
-        th {
-            background-color: #2e2e2e;
-            color: #00e676;
-        }
-        tr:hover {
-            background-color: #2a2a2a;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Roblox MM2 Value List</h1>
-    <input type="text" id="searchInput" class="search-box" onkeyup="searchItem()" placeholder="Eşya ara...">
-
-    <table id="valueTable">
-        <thead>
-            <tr>
-                <th>Eşya Adı</th>
-                <th>Değer (Value)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Snowcannon</td>
-                <td>675</td>
-            </tr>
-            <tr>
-                <td>Icebreaker</td>
-                <td>125</td>
-            </tr>
-            <tr>
-                <td>Harvester</td>
-                <td>2400</td>
-            </tr>
-        </tbody>
-    </table>
-
+    <title>MM2 Values - Roblox Murder Mystery 2 Değer Listesi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Font Family -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
-        function searchItem() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let rows = document.getElementById('valueTable').getElementsByTagName('tr');
-
-            for (let i = 1; i < rows.length; i++) {
-                let itemName = rows[i].getElementsByTagName('td')[0].innerText.toLowerCase();
-                if (itemName.includes(input)) {
-                    rows[i].style.display = "";
-                } else {
-                    rows[i].style.display = "none";
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            green: '#00FF66',
+                            emerald: '#059669',
+                            dark: '#0A0D14',
+                            card: '#121824',
+                            border: '#1F293D'
+                        }
+                    }
                 }
             }
         }
     </script>
+    <style>
+        body {
+            background-color: #0A0D14;
+            color: #F3F4F6;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(0, 255, 102, 0.15);
+        }
+        .glow-card:hover {
+            box-shadow: 0 0 30px -5px rgba(0, 255, 102, 0.25);
+            border-color: rgba(0, 255, 102, 0.4);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0D14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1F293D;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00FF66;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-brand-green selection:text-black">
 
-</body>
-</html>
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-brand-dark/80 border-b border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-green to-emerald-400 flex items-center justify-center text-black font-extrabold text-xl shadow-lg shadow-brand-green/20">
+                    M2
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold bg-gradient-to-r from-white via-gray-200 to-brand-green bg-clip-text text-transparent">
+                        MM2 VALUES
+                    </h1>
+                    <p class="text-xs text-gray-400 font-medium">Güncel Roblox MM2 Değer Listesi</p>
+                </div>
+            </div>
+
+            <!-- Header Quick Stats -->
+            <div class="hidden md:flex items-center gap-6 text-sm">
+                <div class="flex items-center gap-2 text-gray-400">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-brand-green"></i>
+                    <span>%100 Doğrulanmış Değerler</span>
+                </div>
+                <div class="flex items-center gap-2 text-gray-400">
+                    <i data-lucide="refresh-cw" class="w-4 h-4 text-brand-green"></i>
+                    <span>Günlük Güncelleme</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+        <!-- Hero Section -->
+        <section class="text-center space-y-4 py-6">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-green/10 text-brand-green border border-brand-green/20 text-xs font-semibold tracking-wide">
+                <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span> CANLI PIYASA DEĞERLERİ
+            </span>
+            <h2 class="text-4xl sm:text-5xl font-black tracking-tight text-white">
+                Murder Mystery 2 <span class="text-brand-green">Bıçak & Silah</span> Değerleri
+            </h2>
+            <p class="max-w-2xl mx-auto text-gray-400 text-sm sm:text-base">
+                En güncel takas değerlerini inceleyin, tekliflerinizi hesaplayın ve en karlı takasları yapın.
+            </p>
+        </section>
+
+        <!-- Trade Calculator Panel -->
+        <section class="bg-brand-card border border-brand-border rounded-2xl p-6 glow-effect relative overflow-hidden">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="p-2 bg-brand-green/10 rounded-lg text-brand-green">
+                        <i data-lucide="calculator" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Takas Hesaplayıcısı</h3>
+                        <p class="text-xs text-gray-400">Senin teklifin ile karşı tarafın teklifini karşılaştır</p>
+                    </div>
+                </div>
+                <button onclick="clearCalculator()" class="text-xs text-gray-400 hover:text-red-400 transition flex items-center gap-1">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i> Temizle
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
+                <!-- Offer Side -->
+                <div class="bg-brand-dark/60 rounded-xl p-4 border border-brand-border/60">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-sm font-semibold text-gray-300">Senin Offer'ın</span>
+                        <span id="yourTotal" class="text-lg font-extrabold text-brand-green">0 Val</span>
+                    </div>
+                    <div id="yourOfferList" class="min-h-[100px] flex flex-wrap gap-2 items-center justify-center border-2 border-dashed border-brand-border rounded-lg p-3 text-xs text-gray-500">
+                        Aşağıdaki listeden eşya seçerek ekle
+                    </div>
+                </div>
+
+                <!-- VS Badge in Middle -->
+                <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-brand-border text-brand-green font-bold text-xs items-center justify-center border-2 border-brand-card z-10">
+                    VS
+                </div>
+
+                <!-- Their Side -->
+                <div class="bg-brand-dark/60 rounded-xl p-4 border border-brand-border/60">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-sm font-semibold text-gray-300">Karşı Tarafın Offer'ı</span>
+                        <span id="theirTotal" class="text-lg font-extrabold text-brand-green">0 Val</span>
+                    </div>
+                    <div id="theirOfferList" class="min-h-[100px] flex flex-wrap gap-2 items-center justify-center border-2 border-dashed border-brand-border rounded-lg p-3 text-xs text-gray-500">
+                        Karşı taraf için eşya seçmek için modunu değiştir
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculator Result Status -->
+            <div id="calcStatus" class="mt-4 p-3 rounded-lg text-center font-bold text-sm bg-brand-dark border border-brand-border text-gray-400">
+                Lütfen hesaplama yapmak için eşya ekleyin.
+            </div>
+        </section>
+
+        <section class="space-y-6">
+            <!-- Search & Mode Selector Bar -->
+            <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <!-- Search Input -->
+                <div class="relative w-full md:w-96">
+                    <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                    <input type="text" id="searchInput" oninput="renderItems()" placeholder="Eşya adı veya türü ara..." 
+                           class="w-full bg-brand-card border border-brand-border rounded-xl pl-12 pr-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand-green focus:ring-1 focus:ring-brand-green transition">
+                </div>
+
+                <!-- Calculator Side Switch (Radio Buttons) -->
+                <div class="flex items-center bg-brand-card border border-brand-border p-1 rounded-xl w-full md:w-auto text-xs font-semibold">
+                    <span class="px-3 text-gray-400">Tıklandığında Ekle:</span>
+                    <button id="modeYourBtn" onclick="setCalcMode('your')" class="flex-1 md:flex-none px-4 py-2 rounded-lg bg-brand-green text-black font-bold transition">
+                        Sana (+)
+                    </button>
+                    <button id="modeTheirBtn" onclick="setCalcMode('their')" class="flex-1 md:flex-none px-4 py-2 rounded-lg text-gray-400 hover:text-white transition">
+                        Karşıya (+)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="categoryTabs">
+                <!-- Tabs will be generated dynamically -->
+            </div>
+        </section>
+
+        <section>
+            <div id="itemsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Dynamic Item Cards -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden text-center py-16 space-y-3">
+                <i data-lucide="ghost" class="w-12 h-12 text-gray-600 mx-auto"></i>
+                <p class="text-gray-400 font-medium">Aramanızla eşleşen hiçbir MM2 eşyası bulunamadı.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-brand-dark border-t border-brand-border mt-16 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500 space-y-2">
+            <p>© 2026 MM2 Values. Roblox veya Nikilis ile resmi bir bağı yoktur.</p>
+            <p class="text-gray-600">Tüm değerler oyuncu topluluğunun piyasa verilerine dayanmaktadır.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Item List Data (Buraya yeni eşyalar ekleyebilirsin!)
+        const items = [
+            {
+                id: 'snowcannon',
+                name: 'Snowcannon',
+                category: 'Godly',
+                value: 675,
+                demand: 'Yüksek (8/10)',
+                status: 'Yükselişte',
+                statusType: 'up', // 'up', 'stable', 'down'
+                image: 'https://images.placeholders.dev/?width=150&height=150&text=Snowcannon&bgColor=%23121824&textColor=%2300FF66'
+            },
+            {
+                id: 'harvester',
+                name: 'Harvester',
+                category: 'Ancient',
+                value: 2400,
+                demand: 'Çok Yüksek (10/10)',
+                status: 'Kararlı',
+                statusType: 'stable',
+                image: 'https://images.placeholders.dev/?width=150&height=150&text=Harvester&bgColor=%23121824&textColor=%23a855f7'
+            },
+            {
+                id: 'icebreaker',
+                name: 'Icebreaker',
+                category: 'Ancient',
+                value: 125,
+                demand: 'Orta (6/10)',
+                status: 'Düşüşte',
+                statusType: 'down',
+                image: 'https://images.placeholders.dev/?width=150&height=150&text=Icebreaker&bgColor=%23121824&textColor=%23a855f7'
+            },
+            {
+                id: 'corrupt',
+                name: 'Corrupt',
+                category: 'Unique',
+                value: 3800,
+                demand: 'Aşırı Yüksek (10/10)',
+                status: 'Yükselişte',
+                statusType: 'up',
+                image: 'https://images.placeholders.dev/?width=150&height=150&text=Corrupt&bgColor=%23121824&textColor=%23eab308'
+            },
+            {
+                id: 'lightbringer',
+                name: 'Lightbringer',
+                category: 'Godly',
+                value: 75,
+                demand: 'Orta (5/10)',
+                status: 'Kararlı',
+                statusType: 'stable',
+                image: 'https://images.placeholders.dev/?width=150&height=150&text=Lightbringer&bgColor=%23121824&textColor=%2300FF66'
+            },
+            {
+                id: 'bat',
+                name: 'Bat',
+                category: 'Ancient',
+                value: 1850,
+                demand: 'Yüksek (9/10)',
+                status: 'Yükselişte',
+                statusType: 'up',
+                image: 'https://images.placeholders.dev/?width=150&height=150&text=Bat&bgColor=%23121824&textColor=%23a855f7'
+            },
+            {
+                id: 'chroma_lightbringer',
+                name: 'Chroma Lightbringer',
+                category: 'Chromas',
+                value: 110,
+                demand: 'Düşük (4/10)',
+                status: 'Düşüşte',
+                statusType: 'down',
+                image: 'https://images.placeholders.dev/?width=150&height=150&text=Chroma+LB&bgColor=%23121824&textColor=%23ec4899'
+            },
+            {
+                id: 'icewing',
+                name: 'Icewing',
+                category: 'Ancient',
+                value: 5,
+                demand: 'Aşırı Düşük (1/10)',
+                status: 'Kararlı',
+                statusType: 'stable',
+                image: 'https://images.placeholders.dev/?width=150&height=150&text=Icewing&bgColor=%23121824&textColor=%23a855f7'
+            }
+        ];
+
+        // Categories list
+        const categories = ['Hepsi', 'Godly', 'Ancient', 'Unique', 'Chromas'];
+        let selectedCategory = 'Hepsi';
+
+        // Calculator State
+        let calcMode = 'your'; // 'your' or 'their'
+        let yourOffer = [];
+        let theirOffer = [];
+
+        // Category Badge Colors Mapping
+        const categoryColors = {
+            'Godly': 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+            'Ancient': 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+            'Unique': 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+            'Chromas': 'bg-pink-500/10 text-pink-400 border-pink-500/30'
+        };
+
+        // Render Categories Tabs
+        function renderCategories() {
+            const container = document.getElementById('categoryTabs');
+            container.innerHTML = categories.map(cat => {
+                const isActive = cat === selectedCategory;
+                return `
+                    <button onclick="selectCategory('${cat}')" 
+                            class="px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition border ${
+                                isActive 
+                                ? 'bg-brand-green text-black border-brand-green shadow-lg shadow-brand-green/10' 
+                                : 'bg-brand-card text-gray-400 border-brand-border hover:text-white hover:border-gray-600'
+                            }">
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectCategory(cat) {
+            selectedCategory = cat;
+            renderCategories();
+            renderItems();
+        }
+
+        // Render Items Cards
+        function renderItems() {
+            const grid = document.getElementById('itemsGrid');
+            const empty = document.getElementById('emptyState');
+            const query = document.getElementById('searchInput').value.toLowerCase();
+
+            const filtered = items.filter(item => {
+                const matchesSearch = item.name.toLowerCase().includes(query) || item.category.toLowerCase().includes(query);
+                const matchesCat = selectedCategory === 'Hepsi' || item.category === selectedCategory;
+                return matchesSearch && matchesCat;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+
+            empty.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(item => {
+                const badgeStyle = categoryColors[item.category] || 'bg-gray-500/10 text-gray-400 border-gray-500/30';
+                
+                // Status icon and color
+                let statusBadge = '';
+                if(item.statusType === 'up') {
+                    statusBadge = `<span class="text-xs text-emerald-400 flex items-center gap-1 font-semibold"><i data-lucide="trending-up" class="w-3 h-3"></i> ${item.status}</span>`;
+                } else if(item.statusType === 'down') {
+                    statusBadge = `<span class="text-xs text-red-400 flex items-center gap-1 font-semibold"><i data-lucide="trending-down" class="w-3 h-3"></i> ${item.status}</span>`;
+                } else {
+                    statusBadge = `<span class="text-xs text-gray-400 flex items-center gap-1 font-semibold"><i data-lucide="minus" class="w-3 h-3"></i> ${item.status}</span>`;
+                }
+
+                return `
+                    <div class="bg-brand-card border border-brand-border rounded-2xl p-4 flex flex-col justify-between transition-all duration-200 glow-card group relative">
+                        <div>
+                            <!-- Header / Category Badge -->
+                            <div class="flex justify-between items-start mb-3">
+                                <span class="px-2.5 py-1 rounded-lg border text-[10px] font-extrabold uppercase tracking-wider ${badgeStyle}">
+                                    ${item.category}
+                                </span>
+                                ${statusBadge}
+                            </div>
+
+                            <!-- Image Placeholder -->
+                            <div class="w-full h-32 rounded-xl bg-brand-dark/80 flex items-center justify-center p-2 mb-4 group-hover:scale-105 transition-transform duration-200 border border-brand-border/40 overflow-hidden">
+                                <img src="${item.image}" alt="${item.name}" class="max-h-full object-contain rounded-lg" onerror="this.src='https://placehold.co/150x150/121824/00FF66?text=${item.name}'">
+                            </div>
+
+                            <!-- Name & Specs -->
+                            <h4 class="font-bold text-white text-base mb-1 group-hover:text-brand-green transition-colors">${item.name}</h4>
+                            <p class="text-xs text-gray-400 mb-4">Talep: <span class="text-gray-200 font-medium">${item.demand}</span></p>
+                        </div>
+
+                        <div class="space-y-3 pt-3 border-t border-brand-border/60">
+                            <!-- Value Display -->
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-400">Değer (Value):</span>
+                                <span class="text-lg font-black text-brand-green">${item.value.toLocaleString()}</span>
+                            </div>
+
+                            <!-- Add to Calc Button -->
+                            <button onclick="addToCalculator('${item.id}')" 
+                                    class="w-full py-2 px-3 rounded-xl bg-brand-dark hover:bg-brand-green hover:text-black border border-brand-border text-xs font-bold text-gray-300 flex items-center justify-center gap-1.5 transition">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i> Hesaplayıcıya Ekle
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Re-initialize Lucide Icons for dynamic content
+            lucide.createIcons();
+        }
+
+        // Calculator Logic
+        function setCalcMode(mode) {
+            calcMode = mode;
+            const yourBtn = document.getElementById('modeYourBtn');
+            const theirBtn = document.getElementById('modeTheirBtn');
+
+            if(mode === 'your') {
+                yourBtn.className = 'flex-1 md:flex-none px-4 py-2 rounded-lg bg-brand-green text-black font-bold transition';
+                theirBtn.className = 'flex-1 md:flex-none px-4 py-2 rounded-lg text-gray-400 hover:text-white transition';
+            } else {
+                theirBtn.className = 'flex-1 md:flex-none px-4 py-2 rounded-lg bg-brand-green text-black font-bold transition';
+                yourBtn.className = 'flex-1 md:flex-none px-4 py-2 rounded-lg text-gray-400 hover:text-white transition';
+            }
+        }
+
+        function addToCalculator(itemId) {
+            const item = items.find(i => i.id === itemId);
+            if(!item) return;
+
+            if(calcMode === 'your') {
+                yourOffer.push(item);
+            } else {
+                theirOffer.push(item);
+            }
+            updateCalculatorUI();
+        }
+
+        function removeFromCalculator(index, side) {
+            if(side === 'your') {
+                yourOffer.splice(index, 1);
+            } else {
+                theirOffer.splice(index, 1);
+            }
+            updateCalculatorUI();
+        }
+
+        function clearCalculator() {
+            yourOffer = [];
+            theirOffer = [];
+            updateCalculatorUI();
+        }
+
+        function updateCalculatorUI() {
+            const yourList = document.getElementById('yourOfferList');
+            const theirList = document.getElementById('theirOfferList');
+            const yourTotalEl = document.getElementById('yourTotal');
+            const theirTotalEl = document.getElementById('theirTotal');
+            const statusEl = document.getElementById('calcStatus');
+
+            const yourSum = yourOffer.reduce((a, b) => a + b.value, 0);
+            const theirSum = theirOffer.reduce((a, b) => a + b.value, 0);
+
+            yourTotalEl.innerText = `${yourSum.toLocaleString()} Val`;
+            theirTotalEl.innerText = `${theirSum.toLocaleString()} Val`;
+
+            // Render Your Offer Badges
+            if(yourOffer.length === 0) {
+                yourList.innerHTML = `<span class="text-xs text-gray-500">Aşağıdaki listeden eşya seçerek ekle</span>`;
+            } else {
+                yourList.innerHTML = yourOffer.map((item, idx) => `
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-brand-card border border-brand-border text-xs text-white">
+                        ${item.name} (${item.value})
+                        <button onclick="removeFromCalculator(${idx}, 'your')" class="text-gray-400 hover:text-red-400">
+                            <i data-lucide="x" class="w-3 h-3"></i>
+                        </button>
+                    </span>
+                `).join('');
+            }
+
+            // Render Their Offer Badges
+            if(theirOffer.length === 0) {
+                theirList.innerHTML = `<span class="text-xs text-gray-500">Karşı taraf için eşya seçmek için modunu değiştir</span>`;
+            } else {
+                theirList.innerHTML = theirOffer.map((item, idx) => `
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-brand-card border border-brand-border text-xs text-white">
+                        ${item.name} (${item.value})
+                        <button onclick="removeFromCalculator(${idx}, 'their')" class="text-gray-400 hover:text-red-400">
+                            <i data-lucide="x" class="w-3 h-3"></i>
+                        </button>
+                    </span>
+                `).join('');
+            }
+
+            // Status Comparison Message
+            if(yourSum === 0 && theirSum === 0) {
+                statusEl.className = "mt-4 p-3 rounded-lg text-center font-bold text-sm bg-brand-dark border border-brand-border text-gray-400";
+                statusEl.innerText = "Lütfen hesaplama yapmak için eşya ekleyin.";
+            } else if(yourSum === theirSum) {
+                statusEl.className = "mt-4 p-3 rounded-lg text-center font-bold text-sm bg-blue-500/10 border border-blue-500/30 text-blue-400";
+                statusEl.innerText = "⚖️ Adil Takas (Eşit Değer)";
+            } else if(yourSum < theirSum) {
+                const diff = theirSum - yourSum;
+                statusEl.className = "mt-4 p-3 rounded-lg text-center font-bold text-sm bg-emerald-500/10 border border-emerald-500/30 text-emerald-400";
+                const diff = yourSum - theirSum;
